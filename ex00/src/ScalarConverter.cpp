@@ -42,7 +42,7 @@ void ScalarConverter::printChar(char c, const std::string &literal) const {
 	if (!isChar(literal)) {
 		try {
 			throwIfOutOfCharsRange(literal);
-		} catch (const std::out_of_range &e) {
+		} catch (const std::exception &e) {
 			std::cout << e.what() << std::endl;
 			return;
 		}
@@ -67,13 +67,11 @@ void ScalarConverter::printInt(int i, const std::string &literal) const {
 }
 
 
-void ScalarConverter::printFloat(float f, const std::string &literal) const {
-	(void)literal;
+void ScalarConverter::printFloat(float f) const {
 	std::cout << "float: " << std::fixed << std::setprecision(1) << f << "f" << std::endl;
 }
 
-void ScalarConverter::printDouble(double d, const std::string &literal) const {
-	(void)literal;
+void ScalarConverter::printDouble(double d) const {
 	std::cout << "double: " << std::setprecision(1) << std::fixed << d << std::endl;
 }
 
@@ -132,15 +130,15 @@ bool ScalarConverter::isDouble(const std::string &literal) const {
 void ScalarConverter::fromPseudoLiteral(const std::string &literal) const {
 	std::cout << "char: impossible" << std::endl;
 	std::cout << "int: impossible" << std::endl;
-	printFloat(std::stof(literal), literal);
-	printDouble(std::stod(literal), literal);
+	printFloat(std::stof(literal));
+	printDouble(std::stod(literal));
 }
 
 void ScalarConverter::fromChar(const std::string &literal) const {
 	printChar(literal[0], literal);
 	printInt(static_cast<int>(literal[0]), literal);
-	printFloat(static_cast<float>(literal[0]), literal);
-	printDouble(static_cast<double>(literal[0]), literal);
+	printFloat(static_cast<float>(literal[0]));
+	printDouble(static_cast<double>(literal[0]));
 }
 
 void ScalarConverter::fromInt(const std::string &literal) const {
@@ -156,8 +154,8 @@ void ScalarConverter::fromInt(const std::string &literal) const {
 	}
 	printChar(static_cast<char>(intValue), literal);
 	printInt(intValue, literal);
-	printFloat(static_cast<float>(intValue), literal);
-	printDouble(static_cast<double>(intValue), literal);
+	printFloat(static_cast<float>(intValue));
+	printDouble(static_cast<double>(intValue));
 }
 
 void ScalarConverter::fromFloat(const std::string &literal) const {
@@ -173,8 +171,8 @@ void ScalarConverter::fromFloat(const std::string &literal) const {
 	}
 	printChar(static_cast<char>(floatValue), literal);
 	printInt(static_cast<int>(floatValue), literal);
-	printFloat(floatValue, literal);
-	printDouble(static_cast<double>(floatValue), literal);
+	printFloat(floatValue);
+	printDouble(static_cast<double>(floatValue));
 }
 
 void ScalarConverter::fromDouble(const std::string &literal) const {
@@ -190,8 +188,8 @@ void ScalarConverter::fromDouble(const std::string &literal) const {
 	}
 	printChar(static_cast<char>(doubleValue), literal);
 	printInt(static_cast<int>(doubleValue), literal);
-	printFloat(static_cast<float>(doubleValue), literal);
-	printDouble(doubleValue, literal);
+	printFloat(static_cast<float>(doubleValue));
+	printDouble(doubleValue);
 }
 
 
