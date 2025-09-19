@@ -17,13 +17,16 @@
 # include <ostream>
 #include <iomanip>
 #include <sstream>
+#include <cstdlib>
+#include <limits>
 
 class ScalarConverter {
 	private:
-		void printChar(char c) const;
-		void printInt(int i) const;
-		void printFloat(float f) const;
-		void printDouble(double d) const;
+		void printChar(char c, const std::string &literal) const;
+		void printInt(int i, const std::string &literal) const;
+		void printFloat(float f, const std::string &literal) const;
+		void printDouble(double d, const std::string &literal) const;
+		void throwIfOutOfCharsRange(const std::string &literal) const;
 
 		bool isPseudoLiteral(const std::string &literal) const;
 		bool isChar(const std::string &literal) const;
