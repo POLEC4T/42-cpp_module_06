@@ -3,8 +3,8 @@ INCLUDE_DIR = include
 OBJ_DIR = obj
 
 NAME = scalarconverter
-CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -ggdb3
+CXX = c++
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 SRC_FILES =\
 	main.cpp\
 	ScalarConverter.cpp\
@@ -22,10 +22,10 @@ RM = rm -rf
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES)
+	$(CXX) $(CFLAGS) -o $(NAME) $(OBJ_FILES)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(INCS) | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@ -I$(INCLUDE_DIR)
+	$(CXX) $(CFLAGS) -c $< -o $@ -I$(INCLUDE_DIR)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)

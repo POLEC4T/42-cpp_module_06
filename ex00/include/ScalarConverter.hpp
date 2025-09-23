@@ -15,10 +15,11 @@
 
 # include <iostream>
 # include <ostream>
-#include <iomanip>
-#include <sstream>
-#include <cstdlib>
-#include <limits>
+# include <iomanip>
+# include <sstream>
+# include <cstdlib>
+# include <string>
+# include <limits>
 
 class ScalarConverter {
 	private:
@@ -33,6 +34,9 @@ class ScalarConverter {
 		bool isInt(const std::string &literal) const;
 		bool isFloat(const std::string &literal) const;
 		bool isDouble(const std::string &literal) const;
+
+		template<typename T>
+		T convertToT(const std::string &literal) const;
 
 		void fromPseudoLiteral(const std::string &literal) const;
 		void fromChar(const std::string &literal) const;

@@ -28,7 +28,7 @@ ScalarConverter::~ScalarConverter() {}
 void ScalarConverter::throwIfOutOfCharsRange(const std::string &literal) const {
 	double value;
 	try {
-		value = std::stod(literal);
+		value = convertToT<double>(literal);
 	} catch (...) {
 		throw std::out_of_range("overflow");
 	}
@@ -52,20 +52,18 @@ void ScalarConverter::printChar(char c, const std::string &literal) const {
 	else
 		std::cout << "'" << c << "'" << std::endl;
 }
-
 void ScalarConverter::printInt(int i, const std::string &literal) const {
 	if (!isChar(literal)) {
 		try {
-			int value = std::stoi(literal);
+			int value = convertToT<int>(literal);
 			(void)value;
-		} catch (std::exception &e) {
-			std::cout << "int: " << e.what() << std::endl;
+		} catch (...) {
+			std::cout << "int: overflow" << std::endl;
 			return;
 		}
 	}
 	std::cout << "int: " << i << std::endl;
 }
-
 
 void ScalarConverter::printFloat(float f) const {
 	std::cout << "float: " << std::fixed << std::setprecision(1) << f << "f" << std::endl;
@@ -100,7 +98,7 @@ bool ScalarConverter::isPseudoLiteral(const std::string &literal) const {
 bool ScalarConverter::isFloat(const std::string &literal) const {
 	if (literal.empty())
 		return false;
-	if (literal.back() != 'f')
+	if (literal[literal.length() - 1] != 'f')
 		return false;
 	if (literal.find('.') == std::string::npos)
 		return false;
@@ -130,8 +128,16 @@ bool ScalarConverter::isDouble(const std::string &literal) const {
 void ScalarConverter::fromPseudoLiteral(const std::string &literal) const {
 	std::cout << "char: impossible" << std::endl;
 	std::cout << "int: impossible" << std::endl;
-	printFloat(std::stof(literal));
-	printDouble(std::stod(literal));
+	if (literal == "nan" || literal == "nanf") {
+		std::cout << "float: nanf" << std::endl;
+		std::cout << "double: nan" << std::endl;
+	} else if (literal == "+inf" || literal == "+inff") {
+		std::cout << "float: +inff" << std::endl;
+		std::cout << "double: +inf" << std::endl;
+	} else if (literal == "-inf" || literal == "-inff") {
+		std::cout << "float: -inff" << std::endl;
+		std::cout << "double: -inf" << std::endl;
+	}
 }
 
 void ScalarConverter::fromChar(const std::string &literal) const {
@@ -141,11 +147,21 @@ void ScalarConverter::fromChar(const std::string &literal) const {
 	printDouble(static_cast<double>(literal[0]));
 }
 
+template <typename T>
+T ScalarConverter::convertToT(const std::string &literal) const {
+	T value;
+	std::stringstream ss(literal);
+	ss >> value;
+	if (ss.fail())
+		throw std::exception();
+	return (value);
+}
+
 void ScalarConverter::fromInt(const std::string &literal) const {
 	int intValue;
 	try {
-		intValue = std::stoi(literal);
-	} catch (...) {
+		intValue = convertToT<int>(literal);
+	} catch (std::exception &e) {
 		std::cout << "char: overflow" << std::endl;
 		std::cout << "int: overflow" << std::endl;
 		std::cout << "float: impossible (int overflow)" << std::endl;
@@ -161,7 +177,7 @@ void ScalarConverter::fromInt(const std::string &literal) const {
 void ScalarConverter::fromFloat(const std::string &literal) const {
 	float floatValue;
 	try {
-		floatValue = std::stof(literal);
+		floatValue = convertToT<float>(literal);
 	} catch (...) {
 		std::cout << "char: overflow" << std::endl;
 		std::cout << "int: overflow" << std::endl;
@@ -178,7 +194,7 @@ void ScalarConverter::fromFloat(const std::string &literal) const {
 void ScalarConverter::fromDouble(const std::string &literal) const {
 	double doubleValue;
 	try {
-		doubleValue = std::stod(literal);
+		doubleValue = convertToT<double>(literal);
 	} catch (...) {
 		std::cout << "char: overflow" << std::endl;
 		std::cout << "int: overflow" << std::endl;
@@ -205,7 +221,10 @@ void ScalarConverter::convert(const std::string &literal) const {
 	else if (isDouble(literal))
 		fromDouble(literal);
 	else {
-		std::cerr << "Error: invalid literal" << std::endl;
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: nanf" << std::endl;
+		std::cout << "double: nan" << std::endl;
 		return;
 	}
 }
