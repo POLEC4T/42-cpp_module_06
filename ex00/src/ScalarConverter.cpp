@@ -39,13 +39,11 @@ void ScalarConverter::throwIfOutOfCharsRange(const std::string &literal) const {
 
 void ScalarConverter::printChar(char c, const std::string &literal) const {
 	std::cout << "char: ";
-	if (!isChar(literal)) {
-		try {
-			throwIfOutOfCharsRange(literal);
-		} catch (const std::exception &e) {
-			std::cout << e.what() << std::endl;
-			return;
-		}
+	try {
+		throwIfOutOfCharsRange(literal);
+	} catch (const std::exception &e) {
+		std::cout << e.what() << std::endl;
+		return;
 	}
 	if (c < 32 || c == 127)
 		std::cout << "Non displayable" << std::endl;
@@ -53,14 +51,12 @@ void ScalarConverter::printChar(char c, const std::string &literal) const {
 		std::cout << "'" << c << "'" << std::endl;
 }
 void ScalarConverter::printInt(int i, const std::string &literal) const {
-	if (!isChar(literal)) {
-		try {
-			int value = convertToT<int>(literal);
-			(void)value;
-		} catch (...) {
-			std::cout << "int: overflow" << std::endl;
-			return;
-		}
+	try {
+		int value = convertToT<int>(literal);
+		(void)value;
+	} catch (...) {
+		std::cout << "int: overflow" << std::endl;
+		return;
 	}
 	std::cout << "int: " << i << std::endl;
 }
@@ -149,11 +145,14 @@ void ScalarConverter::fromChar(const std::string &literal) const {
 
 template <typename T>
 T ScalarConverter::convertToT(const std::string &literal) const {
+	if (isChar(literal))
+		return static_cast<T>(literal[0]);
 	T value;
 	std::stringstream ss(literal);
 	ss >> value;
-	if (ss.fail())
+	if (ss.fail()) {
 		throw std::exception();
+	}
 	return (value);
 }
 
@@ -161,7 +160,7 @@ void ScalarConverter::fromInt(const std::string &literal) const {
 	int intValue;
 	try {
 		intValue = convertToT<int>(literal);
-	} catch (std::exception &e) {
+	} catch (...) {
 		std::cout << "char: overflow" << std::endl;
 		std::cout << "int: overflow" << std::endl;
 		std::cout << "float: impossible (int overflow)" << std::endl;
