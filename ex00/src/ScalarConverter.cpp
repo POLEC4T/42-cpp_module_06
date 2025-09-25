@@ -108,7 +108,7 @@ bool ScalarConverter::isFloat(const std::string &literal) const {
 }
 
 bool ScalarConverter::isDouble(const std::string &literal) const {
-	if (literal.empty()) 
+	if (literal.empty())
 		return false;
 	if (literal.find('.') == std::string::npos)
 		return false;
