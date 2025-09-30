@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 12:34:42 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/09/25 12:42:39 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/09/30 15:59:46 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void identify(Base& p) {
 }
 
 int main() {
-	srand((time(0)));
+	srand(time(NULL));
 
 	Base* base = generate();
 

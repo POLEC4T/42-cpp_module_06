@@ -6,7 +6,7 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 11:49:28 by mniemaz           #+#    #+#             */
-/*   Updated: 2025/09/25 11:58:55 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/09/30 15:58:20 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 #include "Data.hpp"
 
 Serializer::Serializer(void) {}
+
 Serializer::~Serializer(void) {}
+
 Serializer::Serializer(const Serializer& copy) {
 	(void)copy;
 }
