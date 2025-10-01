@@ -6,17 +6,15 @@
 /*   By: mniemaz <mniemaz@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 01:12:58 by miloniemaz        #+#    #+#             */
-/*   Updated: 2025/09/25 11:34:59 by mniemaz          ###   ########.fr       */
+/*   Updated: 2025/10/01 10:12:50 by mniemaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
 
 int main (int ac, char **av) {
-	ScalarConverter sc;
-
 	if (ac == 2) {
-		sc.convert(av[1]);
+		ScalarConverter::convert(av[1]);
 		return 0;
 	}
 
@@ -47,7 +45,7 @@ int main (int ac, char **av) {
 	size_t i = 0;
 	while (i < sizeof(tests) / sizeof(tests[0])) {
 		std::cout << "Test " << i + 1 << ": \"" << tests[i] << "\"" << std::endl << std::endl;
-		sc.convert(tests[i]);
+		ScalarConverter::convert(tests[i]);
 		std::cout << "------------------------" << std::endl;
 		i++;
 	}

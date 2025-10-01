@@ -25,7 +25,7 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter &other) {
 
 ScalarConverter::~ScalarConverter() {}
 
-void ScalarConverter::throwIfOutOfCharsRange(const std::string &literal) const {
+void ScalarConverter::throwIfOutOfCharsRange(const std::string &literal) {
 	double value;
 	try {
 		value = convertToT<double>(literal);
@@ -37,7 +37,7 @@ void ScalarConverter::throwIfOutOfCharsRange(const std::string &literal) const {
 	}
 }
 
-void ScalarConverter::printChar(char c, const std::string &literal) const {
+void ScalarConverter::printChar(char c, const std::string &literal) {
 	std::cout << "char: ";
 	try {
 		throwIfOutOfCharsRange(literal);
@@ -50,7 +50,7 @@ void ScalarConverter::printChar(char c, const std::string &literal) const {
 	else
 		std::cout << "'" << c << "'" << std::endl;
 }
-void ScalarConverter::printInt(int i, const std::string &literal) const {
+void ScalarConverter::printInt(int i, const std::string &literal) {
 	try {
 		int value = convertToT<int>(literal);
 		(void)value;
@@ -61,19 +61,19 @@ void ScalarConverter::printInt(int i, const std::string &literal) const {
 	std::cout << "int: " << i << std::endl;
 }
 
-void ScalarConverter::printFloat(float f) const {
+void ScalarConverter::printFloat(float f) {
 	std::cout << "float: " << std::fixed << std::setprecision(1) << f << "f" << std::endl;
 }
 
-void ScalarConverter::printDouble(double d) const {
+void ScalarConverter::printDouble(double d) {
 	std::cout << "double: " << std::setprecision(1) << std::fixed << d << std::endl;
 }
 
-bool ScalarConverter::isChar(const std::string &literal) const {
+bool ScalarConverter::isChar(const std::string &literal) {
 	return (literal.length() == 1 && !std::isdigit(literal[0]));
 }
 
-bool ScalarConverter::isInt(const std::string &literal) const {
+bool ScalarConverter::isInt(const std::string &literal) {
 	if (literal.empty())
 		return false;
 	for (size_t i = 0; i < literal.length(); ++i) {
@@ -83,7 +83,7 @@ bool ScalarConverter::isInt(const std::string &literal) const {
 	return true;
 }
 
-bool ScalarConverter::isPseudoLiteral(const std::string &literal) const {
+bool ScalarConverter::isPseudoLiteral(const std::string &literal) {
 	if (literal == "nanf" || literal == "+inff" || literal == "-inff")
 		return true;
 	if (literal == "nan" || literal == "+inf" || literal == "-inf")
@@ -91,7 +91,7 @@ bool ScalarConverter::isPseudoLiteral(const std::string &literal) const {
 	return false;
 }
 
-bool ScalarConverter::isFloat(const std::string &literal) const {
+bool ScalarConverter::isFloat(const std::string &literal) {
 	if (literal.empty())
 		return false;
 	if (literal[literal.length() - 1] != 'f')
@@ -107,7 +107,7 @@ bool ScalarConverter::isFloat(const std::string &literal) const {
 	return true;
 }
 
-bool ScalarConverter::isDouble(const std::string &literal) const {
+bool ScalarConverter::isDouble(const std::string &literal) {
 	if (literal.empty())
 		return false;
 	if (literal.find('.') == std::string::npos)
@@ -121,7 +121,7 @@ bool ScalarConverter::isDouble(const std::string &literal) const {
 	return true;
 }
 
-void ScalarConverter::fromPseudoLiteral(const std::string &literal) const {
+void ScalarConverter::fromPseudoLiteral(const std::string &literal) {
 	std::cout << "char: impossible" << std::endl;
 	std::cout << "int: impossible" << std::endl;
 	if (literal == "nan" || literal == "nanf") {
@@ -136,7 +136,7 @@ void ScalarConverter::fromPseudoLiteral(const std::string &literal) const {
 	}
 }
 
-void ScalarConverter::fromChar(const std::string &literal) const {
+void ScalarConverter::fromChar(const std::string &literal) {
 	printChar(literal[0], literal);
 	printInt(static_cast<int>(literal[0]), literal);
 	printFloat(static_cast<float>(literal[0]));
@@ -144,7 +144,7 @@ void ScalarConverter::fromChar(const std::string &literal) const {
 }
 
 template <typename T>
-T ScalarConverter::convertToT(const std::string &literal) const {
+T ScalarConverter::convertToT(const std::string &literal) {
 	if (isChar(literal))
 		return static_cast<T>(literal[0]);
 	T value;
@@ -156,7 +156,7 @@ T ScalarConverter::convertToT(const std::string &literal) const {
 	return (value);
 }
 
-void ScalarConverter::fromInt(const std::string &literal) const {
+void ScalarConverter::fromInt(const std::string &literal) {
 	int intValue;
 	try {
 		intValue = convertToT<int>(literal);
@@ -173,7 +173,7 @@ void ScalarConverter::fromInt(const std::string &literal) const {
 	printDouble(static_cast<double>(intValue));
 }
 
-void ScalarConverter::fromFloat(const std::string &literal) const {
+void ScalarConverter::fromFloat(const std::string &literal) {
 	float floatValue;
 	try {
 		floatValue = convertToT<float>(literal);
@@ -190,7 +190,7 @@ void ScalarConverter::fromFloat(const std::string &literal) const {
 	printDouble(static_cast<double>(floatValue));
 }
 
-void ScalarConverter::fromDouble(const std::string &literal) const {
+void ScalarConverter::fromDouble(const std::string &literal) {
 	double doubleValue;
 	try {
 		doubleValue = convertToT<double>(literal);
@@ -208,7 +208,7 @@ void ScalarConverter::fromDouble(const std::string &literal) const {
 }
 
 
-void ScalarConverter::convert(const std::string &literal) const {
+void ScalarConverter::convert(const std::string &literal) {
 	if (isPseudoLiteral(literal))
 		fromPseudoLiteral(literal);
 	else if (isChar(literal))

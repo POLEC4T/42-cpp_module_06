@@ -23,35 +23,34 @@
 
 class ScalarConverter {
 	private:
-		void printChar(char c, const std::string &literal) const;
-		void printInt(int i, const std::string &literal) const;
-		void printFloat(float f) const;
-		void printDouble(double d) const;
-		void throwIfOutOfCharsRange(const std::string &literal) const;
+		static void printChar(char c, const std::string &literal);
+		static void printInt(int i, const std::string &literal);
+		static void printFloat(float f);
+		static void printDouble(double d);
+		static void throwIfOutOfCharsRange(const std::string &literal);
 
-		bool isPseudoLiteral(const std::string &literal) const;
-		bool isChar(const std::string &literal) const;
-		bool isInt(const std::string &literal) const;
-		bool isFloat(const std::string &literal) const;
-		bool isDouble(const std::string &literal) const;
+		static bool isPseudoLiteral(const std::string &literal);
+		static bool isChar(const std::string &literal);
+		static bool isInt(const std::string &literal);
+		static bool isFloat(const std::string &literal);
+		static bool isDouble(const std::string &literal);
 
 		template<typename T>
-		T convertToT(const std::string &literal) const;
+		static T convertToT(const std::string &literal);
 
-		void fromPseudoLiteral(const std::string &literal) const;
-		void fromChar(const std::string &literal) const;
-		void fromInt(const std::string &literal) const;
-		void fromFloat(const std::string &literal) const;
-		void fromDouble(const std::string &literal) const;
+		static void fromPseudoLiteral(const std::string &literal);
+		static void fromChar(const std::string &literal);
+		static void fromInt(const std::string &literal);
+		static void fromFloat(const std::string &literal);
+		static void fromDouble(const std::string &literal);
 
-
-	public:
 		ScalarConverter();
 		ScalarConverter(const ScalarConverter &copy);
 		ScalarConverter& operator=(const ScalarConverter &other);
 		~ScalarConverter();
 
-		void convert(const std::string &literal) const;
+	public:
+		static void convert(const std::string &literal);
 };
 
 #endif
